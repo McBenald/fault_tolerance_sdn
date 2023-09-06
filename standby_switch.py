@@ -1,40 +1,22 @@
 import requests
-import time
-import base64
 
-host = "127.0.0.1"
-port = "8181"
-username = "onos"
-password = "rocks"
+def set_switch_to_standby(switch_dpid):
+    # ONOS REST API URL to set the switch to standby
+    onos_ip = "127.0.0.1"  # Replace with your ONOS IP address
+    onos_port = "8181"         # Replace with your ONOS port
+    url = f"http://{onos_ip}:{onos_port}/onos/v1/devices/{switch_dpid}/role/STANDBY"
 
-credentials = base64.b64encode("{}:{}".format(username, password).encode("utf-8")).decode("utf-8")
+    # Send a PUT request to set the switch to standby
+    response = requests.put(url)
 
-def set_standby(switch_ID):
-    url = "http://{}:8181/onos/v1/devices/of:0000000000000001/flows".format(host)
+    if response.status_code == 200:
+        print(f"Switch {switch_dpid} set as standby successfully.")
+    else:
+        print(f"Failed to set switch {switch_dpid} as standby.")
 
-    headers = {
-        "Content-type": "application/json",
-        "Accept": "application/json",
-        "Authorization":  "Basic {}".format(credentials)
-    }
+def main():
+    switch_dpid = '0000000000000010'  # DPID of the switch you want to set as standby
+    set_switch_to_standby(switch_dpid)
 
-    data = {"role": "STANDBY"}
-
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+if __name__ == '__main__':
+    main()
