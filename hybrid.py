@@ -4,19 +4,6 @@ from mininet.node import OVSSwitch
 from mininet.topo import Topo
 
 
-class VLANHost( Host ):
-        def config( self, vlan=100, **params ):
-                """Configure VLANHosts """
-                r = super( Host, self ).config( **params )
-                intf = self.defaultIntf()
-                self.cmd( 'ifconfig %s inet 0' % intf )
-                self.cmd( 'vconfig add %s %d' % ( intf, vlan ) )
-                self.cmd( 'ifconfig %s.%d inet %s' % ( intf, vlan, params['ip'] ) )
-                newName = '%s.%d' % ( intf, vlan )
-                intf.name = newName
-                self.nameToIntf[ newName ] = intf
-                return r
-
 class MyTopo( Topo ):  
     def __init__( self ):
         "Create custom topo."
@@ -25,13 +12,13 @@ class MyTopo( Topo ):
         Topo.__init__( self )
 
         # Add hosts
-        h1 = self.addHost( 'h1' , mac='10:10:10:02:20:01', ip='222.0.0.1/24', cls=VLANHost, vlan=400)
-        h2 = self.addHost( 'h2' , mac='10:10:10:02:20:02', ip='222.0.0.2/24', cls=VLANHost, vlan=400)
-        h3 = self.addHost( 'h3' , mac='10:10:10:02:20:03', ip='222.0.0.3/24', cls=VLANHost, vlan=400)
-        h4 = self.addHost( 'h4' , mac='10:10:10:02:20:04', ip='222.0.0.4/24', cls=VLANHost, vlan=400)
-        h5 = self.addHost( 'h5' , mac='10:10:10:02:20:05', ip='222.0.0.5/24', cls=VLANHost, vlan=400)
-        h6 = self.addHost( 'h6' , mac='10:10:10:02:20:06', ip='222.0.0.6/24', cls=VLANHost, vlan=500)
-        h7 = self.addHost( 'h7' , mac='10:10:10:02:20:07', ip='222.0.0.7/24', cls=VLANHost, vlan=500)
+        h1 = self.addHost( 'h1' , mac='10:10:10:02:20:01', ip='222.0.0.1/24')
+        h2 = self.addHost( 'h2' , mac='10:10:10:02:20:02', ip='222.0.0.2/24')
+        h3 = self.addHost( 'h3' , mac='10:10:10:02:20:03', ip='222.0.0.3/24')
+        h4 = self.addHost( 'h4' , mac='10:10:10:02:20:04', ip='222.0.0.4/24')
+        h5 = self.addHost( 'h5' , mac='10:10:10:02:20:05', ip='222.0.0.5/24')
+        h6 = self.addHost( 'h6' , mac='10:10:10:02:20:06', ip='222.0.0.6/24')
+        h7 = self.addHost( 'h7' , mac='10:10:10:02:20:07', ip='222.0.0.7/24')
         SERVER = self.addHost( 'SERVER' , mac='02:00:00:00:20:03',ip='20.0.0.1/8')
         UDP = self.addHost( 'UDP' , mac='02:00:00:00:20:04',ip='40.0.0.1/8')
 
@@ -41,7 +28,7 @@ class MyTopo( Topo ):
               name = 'switch' + str(i+1)
               switch = self.addSwitch(name, cls=OVSSwitch)
               switches.append(switch)
-        root_switch = self.addSwitch('switch0', cls=OVSSwitch)
+        root_switch = self.addSwitch('switch0', cls=OVSSwitch, dpid='0000000000000010')
 
         #Connect hosts in a star
         for i in range(len(switches)):
