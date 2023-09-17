@@ -49,11 +49,11 @@ class CustomTopo(Topo):
                      params2={'ip': '192.168.2.1/24'})
         
         #Add Servers
-        print_server = self.addHost('server1', ip='192.168.1.2/24', defaultRoute='via 192.168.1.1')
+        web_server = self.addHost('server1', ip='192.168.1.2/24', defaultRoute='via 192.168.1.1')
         dns_server = self.addHost('server2', ip='192.168.1.3/24', defaultRoute='via 192.168.1.1')
 
         #Add link for servers
-        self.addLink(print_server, s1)
+        self.addLink(web_server, s1)
         self.addLink(dns_server, s1)
 
         #Add PCs
