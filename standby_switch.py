@@ -10,9 +10,10 @@ def set_switch_to_standby(switch_dpid):
     response = requests.put(url)
 
     if response.status_code == 200:
-        print("Switch {} set as standby successfully.".format(switch_dpid))
-    else:
         print("Failed to set switch {} as standby.".format(switch_dpid))
+
+    else:
+        print("Switch {} set as standby successfully.".format(switch_dpid))
 
 def main():
     switch_dpid = '0000000000000010'  # DPID of the switch you want to set as standby
