@@ -19,6 +19,10 @@ def run_pingall():
         onos_cli.expect('onos.*> ', timeout=120)  # Increased timeout for pingall command
         print("gui2 activated")
 
+        onos_cli.sendline('app activate org.onosproject.acl')
+        #onos_cli.expect('onos.*> ', timeout=120)  # Increased timeout for pingall command
+        print("Access Control activated")
+
         onos_cli.sendline('exit')  # Exit the ONOS CLI
         onos_cli.expect(pexpect.EOF)
         print("Exited ONOS CLI")
