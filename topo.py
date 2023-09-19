@@ -2,6 +2,7 @@ from mininet.topo import Topo
 from mininet.net import Mininet
 from mininet.node import RemoteController, OVSSwitch
 from mininet.link import TCLink
+from mininet.nodelib import NAT
 from mininet.log import info, setLogLevel
 from mininet.node import Node, Host
 from mininet.cli import CLI
@@ -48,12 +49,19 @@ class CustomTopo(Topo):
                      intfName2='r1-eth2',
                      params2={'ip': '192.168.2.1/24'})
         
+        nat = self.addNode('nat', cls=NAT, ip='192.168.1.254', inNamespace=False)
+
+        self.addLink(s0, nat)
+        self.addLink(s1, nat)
+        self.addLink(s2, nat)
+        self.addLink(s3, nat)
+        
         #Add Servers
-        web_server = self.addHost('server1', ip='192.168.1.2/24', defaultRoute='via 192.168.1.1')
+        print_server = self.addHost('server1', ip='192.168.1.2/24', defaultRoute='via 192.168.1.1')
         dns_server = self.addHost('server2', ip='192.168.1.3/24', defaultRoute='via 192.168.1.1')
 
         #Add link for servers
-        self.addLink(web_server, s1)
+        self.addLink(print_server, s1)
         self.addLink(dns_server, s1)
 
         #Add PCs
@@ -63,8 +71,8 @@ class CustomTopo(Topo):
         h4 = self.addHost('h4', ip='192.168.1.14/24', mac='10:00:00:10:00:04', defaultRoute='via 192.168.1.1')
         h5 = self.addHost('h5', ip='192.168.1.15/24', mac='10:00:00:10:00:05', defaultRoute='via 192.168.1.1')
         h6 = self.addHost('h6', ip='192.168.1.16/24', mac='10:00:00:10:00:06', defaultRoute='via 192.168.1.1')
-        h7 = self.addHost('h7', ip='192.168.2.11/24', mac='20:00:00:20:00:01', defaultRoute='via 192.168.2.1')
-        h8 = self.addHost('h8', ip='192.168.2.12/24', mac='20:00:00:20:00:02', defaultRoute='via 192.168.2.1')
+        h7 = self.addHost('h7', ip='192.168.1.17/24', mac='20:00:00:20:00:01', defaultRoute='via 192.168.1.1')
+        h8 = self.addHost('h8', ip='192.168.1.18/24', mac='20:00:00:20:00:02', defaultRoute='via 192.168.1.1')
 
 
         #Add links for PCs
@@ -76,6 +84,8 @@ class CustomTopo(Topo):
         self.addLink(h6, s3)
         self.addLink(h7, s2)
         self.addLink(h8, s3)
+
+        
         
 
 def network():
@@ -87,14 +97,42 @@ def network():
         link = TCLink,
         controller= RemoteController(name='remote', ip='127.0.0.1', port=6653, protocols='OpenFlow13')
     )
-
+    
+    
     net.start()
+
+    server1 = net.get('server1')
+    server1.cmd('route add default gw 192.168.1.254')
+    
+    h1 = net.get('h1')
+    h1.cmd('route add default gw 192.168.1.254')
+    h2 = net.get('h2')
+    h2.cmd('route add default gw 192.168.1.254')
+    h3 = net.get('h3')
+    h3.cmd('route add default gw 192.168.1.254')
+    h4 = net.get('h4')
+    h4.cmd('route add default gw 192.168.1.254')
+    h5 = net.get('h5')
+    h5.cmd('route add default gw 192.168.1.254')
+    h6 = net.get('h6')
+    h6.cmd('route add default gw 192.168.1.254')
+    h7 = net.get('h7')
+    h7.cmd('route add default gw 192.168.1.254')
+    h8 = net.get('h8')
+    h8.cmd('route add default gw 192.168.1.254')
+
+    # Install flask to host server
+    server1.cmd('pip install flask')
+    server1.cmd('python flask_app.py &')
+    
     
     # print routing table
     info( '*** Routing Table on Router:\n' )
     info( net[ 'r1' ].cmd( 'route' ) )
 
-    net.pingAll()
+
+
+    #net.pingAll()
 
 
 
