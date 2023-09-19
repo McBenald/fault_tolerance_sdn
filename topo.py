@@ -130,11 +130,7 @@ def network():
     info( '*** Routing Table on Router:\n' )
     info( net[ 'r1' ].cmd( 'route' ) )
 
-
-
-    #net.pingAll()
-
-
+    net.pingAll()
 
     CLI(net)
 
