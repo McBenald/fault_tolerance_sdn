@@ -123,7 +123,7 @@ def network():
 
     # Install flask to host server
     server1.cmd('pip install flask')
-    server1.cmd('python flask_app.py &')
+    server1.cmd('python web_app.py &')
     
     
     # print routing table
