@@ -57,11 +57,11 @@ class CustomTopo(Topo):
         self.addLink(s3, nat)
         
         #Add Servers
-        print_server = self.addHost('server1', ip='192.168.1.2/24', defaultRoute='via 192.168.1.1')
+        web_server = self.addHost('server1', ip='192.168.1.2/24', defaultRoute='via 192.168.1.1')
         dns_server = self.addHost('server2', ip='192.168.1.3/24', defaultRoute='via 192.168.1.1')
 
         #Add link for servers
-        self.addLink(print_server, s1)
+        self.addLink(web_server, s1)
         self.addLink(dns_server, s1)
 
         #Add PCs
@@ -69,10 +69,10 @@ class CustomTopo(Topo):
         h2 = self.addHost('h2', ip='192.168.1.12/24', mac='10:00:00:10:00:02', defaultRoute='via 192.168.1.1')
         h3 = self.addHost('h3', ip='192.168.1.13/24', mac='10:00:00:10:00:03', defaultRoute='via 192.168.1.1')
         h4 = self.addHost('h4', ip='192.168.1.14/24', mac='10:00:00:10:00:04', defaultRoute='via 192.168.1.1')
-        h5 = self.addHost('h5', ip='192.168.1.15/24', mac='10:00:00:10:00:05', defaultRoute='via 192.168.1.1')
-        h6 = self.addHost('h6', ip='192.168.1.16/24', mac='10:00:00:10:00:06', defaultRoute='via 192.168.1.1')
-        h7 = self.addHost('h7', ip='192.168.1.17/24', mac='20:00:00:20:00:01', defaultRoute='via 192.168.1.1')
-        h8 = self.addHost('h8', ip='192.168.1.18/24', mac='20:00:00:20:00:02', defaultRoute='via 192.168.1.1')
+        h5 = self.addHost('h5', ip='192.168.2.11/24', mac='20:00:00:20:00:01', defaultRoute='via 192.168.2.1')
+        h6 = self.addHost('h6', ip='192.168.2.12/24', mac='20:00:00:20:00:02', defaultRoute='via 192.168.2.1')
+        h7 = self.addHost('h7', ip='192.168.2.13/24', mac='20:00:00:20:00:03', defaultRoute='via 192.168.2.1')
+        h8 = self.addHost('h8', ip='192.168.2.14/24', mac='20:00:00:20:00:04', defaultRoute='via 192.168.2.1')
 
 
         #Add links for PCs
@@ -101,8 +101,11 @@ def network():
     
     net.start()
 
+    #ADD route to nat
     server1 = net.get('server1')
     server1.cmd('route add default gw 192.168.1.254')
+    server2 = net.get('server2')
+    server2.cmd('route add default gw 192.168.1.254')
     
     h1 = net.get('h1')
     h1.cmd('route add default gw 192.168.1.254')
@@ -121,7 +124,7 @@ def network():
     h8 = net.get('h8')
     h8.cmd('route add default gw 192.168.1.254')
 
-    # Install flask to host server
+    # Install flask to web server
     server1.cmd('pip install flask')
     server1.cmd('python web_app.py &')
     
