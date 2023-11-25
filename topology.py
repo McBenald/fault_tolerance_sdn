@@ -101,13 +101,10 @@ def network():
     
     net.start()
 
-    # Create a bridge and add the external interface to it
-    nat = net.get('nat')
-
-    # Configure NAT
-    
+    # Configure NAT to connect to the internet
+    nat = net.get('nat')    
     nat.cmd('sysctl net.ipv4.ip_forward=1')
-    nat.cmd('iptables -t nat -A POSTROUTING -o en33 -j MASQUERADE')
+    nat.cmd('iptables -t nat -A POSTROUTING -o ens33 -j MASQUERADE')
 
 
     #ADD route to nat

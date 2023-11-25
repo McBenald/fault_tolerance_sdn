@@ -12,19 +12,19 @@ class MyTopo( Topo ):
         Topo.__init__( self )
 
         # Add hosts
-        h1 = self.addHost( 'h1' , mac='10:10:10:02:20:01', ip='222.0.0.1/24')
-        h2 = self.addHost( 'h2' , mac='10:10:10:02:20:02', ip='222.0.0.2/24')
-        h3 = self.addHost( 'h3' , mac='10:10:10:02:20:03', ip='222.0.0.3/24')
-        h4 = self.addHost( 'h4' , mac='10:10:10:02:20:04', ip='222.0.0.4/24')
-        h5 = self.addHost( 'h5' , mac='10:10:10:02:20:05', ip='222.0.0.5/24')
-        h6 = self.addHost( 'h6' , mac='10:10:10:02:20:06', ip='222.0.0.6/24')
-        h7 = self.addHost( 'h7' , mac='10:10:10:02:20:07', ip='222.0.0.7/24')
+        h11 = self.addHost( 'h11' , mac='10:10:10:02:20:01', ip='222.0.0.1/24')
+        h12 = self.addHost( 'h12' , mac='10:10:10:02:20:02', ip='222.0.0.2/24')
+        h13 = self.addHost( 'h13' , mac='10:10:10:02:20:03', ip='222.0.0.3/24')
+        h14 = self.addHost( 'h14' , mac='10:10:10:02:20:04', ip='222.0.0.4/24')
+        h15 = self.addHost( 'h15' , mac='10:10:10:02:20:05', ip='222.0.0.5/24')
+        h16 = self.addHost( 'h16' , mac='10:10:10:02:20:06', ip='222.0.0.6/24')
+        h17 = self.addHost( 'h17' , mac='10:10:10:02:20:07', ip='222.0.0.7/24')
         SERVER = self.addHost( 'SERVER' , mac='02:00:00:00:20:03',ip='20.0.0.1/8')
         UDP = self.addHost( 'UDP' , mac='02:00:00:00:20:04',ip='40.0.0.1/8')
 
         # Add switches
         switches = []
-        for i in range(4):
+        for i in range(10, 14):
               name = 'switch' + str(i+1)
               switch = self.addSwitch(name, cls=OVSSwitch)
               switches.append(switch)
@@ -41,14 +41,14 @@ class MyTopo( Topo ):
         
         # Add links 
 
-        self.addLink( h1, switches[0] )
-        self.addLink( h2, switches[2] )
-        self.addLink( h3, switches[0] )
+        self.addLink( h11, switches[0] )
+        self.addLink( h12, switches[2] )
+        self.addLink( h13, switches[0] )
         self.addLink( SERVER, switches[0] )
-        self.addLink( h4, switches[3] )
-        self.addLink( h5, switches[3] )
-        self.addLink( h6, switches[1] )
-        self.addLink( h7, switches[1] )
+        self.addLink( h14, switches[3] )
+        self.addLink( h15, switches[3] )
+        self.addLink( h16, switches[1] )
+        self.addLink( h17, switches[1] )
         self.addLink( UDP, switches[2] )
 	
 	
