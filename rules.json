@@ -1,0 +1,27 @@
+[
+    {
+      "srcIp": "191.168.10.0/24",
+      "dstIp": "191.168.10.2/32",
+      "ipProto": "UDP",
+      "action": "ALLOW",
+      "port": "5500",
+      "dscp": 30
+    },
+
+    {
+      "srcIp": "191.168.10.0/24",
+      "dstIp": "191.168.10.2/32",
+      "ipProto": "TCP",
+      "action": "DENY",
+      "priority": 30
+    },
+
+    {
+      "srcIp": "191.168.10.0/24",
+      "dstIp": "191.168.10.2/32",
+      "ipProto": "UDP",
+      "action": "DENY",
+      "priority": 30
+    }
+
+]
