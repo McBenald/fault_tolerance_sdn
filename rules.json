@@ -1,24 +1,49 @@
 [
     {
-      "srcIp": "191.168.10.0/24",
-      "dstIp": "191.168.10.2/32",
-      "ipProto": "UDP",
+      "srcIp": "192.168.1.0/24",
+      "dstIp": "192.168.1.2/32",
+      "ipProto": "TCP",
       "action": "ALLOW",
       "port": "5500",
-      "dscp": 30
+      "dscp": 300
     },
 
     {
-      "srcIp": "191.168.10.0/24",
-      "dstIp": "191.168.10.2/32",
+      "srcIp": "192.168.2.0/24",
+      "dstIp": "192.168.1.2/32",
+      "ipProto": "TCP",
+      "action": "ALLOW",
+      "port": "5500",
+      "dscp": 300
+    },
+
+    {
+      "srcIp": "192.168.1.0/24",
+      "dstIp": "192.168.1.2/32",
       "ipProto": "TCP",
       "action": "DENY",
       "priority": 30
     },
 
     {
-      "srcIp": "191.168.10.0/24",
-      "dstIp": "191.168.10.2/32",
+      "srcIp": "192.168.1.0/24",
+      "dstIp": "192.168.1.2/32",
+      "ipProto": "UDP",
+      "action": "DENY",
+      "priority": 30
+    },
+
+    {
+      "srcIp": "192.168.2.0/24",
+      "dstIp": "192.168.1.2/32",
+      "ipProto": "TCP",
+      "action": "DENY",
+      "priority": 30
+    },
+
+    {
+      "srcIp": "192.168.2.0/24",
+      "dstIp": "192.168.1.2/32",
       "ipProto": "UDP",
       "action": "DENY",
       "priority": 30
