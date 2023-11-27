@@ -1,0 +1,34 @@
+{
+    "priority": 40000,
+    "timeout": 0,
+    "isPermanent": true,
+    "deviceId": "of:0000000000000001",
+    "treatment": {
+        "instructions": [
+            {
+                "type": "OUTPUT",
+                "port": "CONTROLLER"
+            }
+        ]
+    },
+    "selector": {
+        "criteria": [
+            {
+                "type": "IN_PORT",
+                "port": 1
+            },
+            {
+                "type": "ETH_TYPE",
+                "ethType": "0x0800"
+            },
+            {
+                "type": "IP_PROTO",
+                "protocol": 6  
+            }, 
+            {
+                "type": "TCP_DST",
+                "tcpPort": 5500
+            }
+        ]
+    }
+}
