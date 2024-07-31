@@ -24,3 +24,4 @@ if response.status_code == 201:
     print("firewall rule set successfully.")
 else:
     print("firewall rule not set successfully.")
+    
