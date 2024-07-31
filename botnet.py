@@ -29,3 +29,4 @@ if __name__ == '__main__':
 
     # Start the botnet simulation
     simulate_botnet(net, botnet_node, target_ip, duration)
+
