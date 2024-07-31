@@ -51,3 +51,4 @@ def install_flow_rule(device_ID):
         print("Flow rule installed successfully!")
     else:
         print("Failed to install flow rule. Error {}".format(response.text))
+        
