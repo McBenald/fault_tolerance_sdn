@@ -1,6 +1,6 @@
 import requests
 
-def set_switch_to_standby(switch_dpid):
+def set_switch_to_standby(switch_dpid): 
     # ONOS REST API URL to set the switch to standby
     onos_ip = "127.0.0.1"  # Replace with your ONOS IP address
     onos_port = "8181"         # Replace with your ONOS port
@@ -21,3 +21,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+
